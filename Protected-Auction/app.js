@@ -1,3 +1,5 @@
+require('dotenv').config(); // 👈 최상단에서 환경변수를 가장 먼저 로드합니다!
+
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -80,11 +82,11 @@ server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// 10초마다 자동 마감 처리 호출
+// 6초마다 자동 마감 처리 호출
 setInterval(() => {
   fetch('http://localhost:3000/auction/process-expired-auctions', {
     method: 'POST'
   }).then(res => res.json())
     .then(json => console.log('[마감처리]', json))
     .catch(err => console.error('❌ 마감 처리 실패:', err));
-}, 6000); // 10초
+}, 6000);
