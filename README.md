@@ -149,27 +149,35 @@ http://localhost:3000
 
 # 📸 화면 소개
 
-## 이용약관 / 회원가입
+## 👤 회원가입 및 마이페이지
+> 서비스 시작을 위한 회원가입과 개인 정보 및 내역을 관리하는 공간입니다.
 
-| 이용약관 | 회원가입 |
-|---|---|
-| <img src="./images/terms.png" width="450"> | <img src="./images/signup.png" width="450"> |
-
----
-
-## 경매 입찰 / 경매 목록
-
-| 입찰하기 | 경매목록 |
-|---|---|
-| <img src="./images/bid.png" width="450"> | <img src="./images/auction-list.png" width="450"> |
+| 이용약관 | 회원가입 | 마이페이지 |
+| :---: | :---: | :---: |
+| <img src="./images/terms.png" width="300"> | <img src="./images/signup.png" width="300"> | <img src="./images/mypage.png" width="300"> |
 
 ---
 
-## 시스템 아키텍처
+## 🔨 경매 및 실시간 입찰
+> 등록된 경매 물품을 확인하고 실시간으로 입찰에 참여할 수 있습니다.
+
+| 경매 목록 | 경매 상세 및 입찰 |
+| :---: | :---: |
+| <img src="./images/auction-list.png" width="450"> | <img src="./images/bid.png" width="450"> |
+
+---
+
+## 💬 낙찰자 실시간 채팅
+> 경매 종료 후 낙찰자와 판매자 간 자동 생성되는 실시간 소통 공간입니다.
 
 <p align="center">
-  <img src="./images/system-architecture.png" width="900"/>
+  <img src="./images/chat.png" width="600" alt="실시간 채팅 화면"/>
 </p>
 
 ---
 
+## ⚙️ 시스템 아키텍처
+
+<p align="center">
+  <img src="./images/system-architecture.png" width="850"/>
+</p>

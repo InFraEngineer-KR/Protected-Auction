@@ -1,4 +1,4 @@
-require('dotenv').config(); // 👈 최상단에서 환경변수를 가장 먼저 로드합니다!
+require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
@@ -10,28 +10,41 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// ✅ 뷰 엔진 설정
+// ======================
+// View Engine
+// ======================
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// ======================
+// Static
+// ======================
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// 세션 설정
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 } // 1시간
-}));
-
-// 정적 파일 경로
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Body 파서
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// ======================
+// Session
+// ======================
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    }
+}));
 
-// 라우터 연결
+// ======================
+// Body Parser
+// ======================
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
+// ======================
+// Routes
+// ======================
 const loginRoute = require('./routes/login_route');
 const chatRoute = require('./routes/chat_route');
 const itemDetailRoute = require('./routes/itemDetail_route');
@@ -48,45 +61,73 @@ app.use('/mypage', mypageRoute);
 app.use('/mylist', myListRoute);
 app.use('/auction', auctionCloseRoute);
 
-// Socket.io 연결 로직
+// ======================
+// Socket.io (전체 채팅)
+// ======================
 io.on('connection', (socket) => {
-  socket.on('joinRoom', (chatRoomId) => {
-    socket.join(chatRoomId);
-  });
 
-  socket.on('leaveRoom', (chatRoomId) => {
-    socket.leave(chatRoomId);
-  });
+    console.log('사용자 접속');
 
-  socket.on('chatMessage', (data) => {
-    const { chatRoomId, userName, message } = data;
-    io.to(chatRoomId).emit('chatMessage', { userName, message });
-  });
+    socket.on('chatMessage', ({ userName, message }) => {
 
-  // 입력 중 이벤트
-  socket.on('typing', ({ chatRoomId, userName }) => {
-    socket.to(chatRoomId).emit('typing', userName);
-  });
+        io.emit('chatMessage', {
+            userName,
+            message
+        });
 
-  // 입력 멈춤 이벤트 추가
-  socket.on('stopTyping', ({ chatRoomId, userName }) => {
-    socket.to(chatRoomId).emit('stopTyping', userName);
-  });
+    });
 
-  socket.on('disconnect', () => {});
+    socket.on('typing', ({ userName }) => {
+
+        socket.broadcast.emit(
+            'typing',
+            userName
+        );
+
+    });
+
+    socket.on('stopTyping', () => {
+
+        socket.broadcast.emit(
+            'stopTyping'
+        );
+
+    });
+
+    socket.on('disconnect', () => {
+
+        console.log('사용자 종료');
+
+    });
+
 });
 
-// 서버 시작
+// ======================
+// Server Start
+// ======================
 const PORT = 3000;
+
 server.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// 6초마다 자동 마감 처리 호출
+// ======================
+// 자동 경매 마감 처리
+// ======================
 setInterval(() => {
-  fetch('http://localhost:3000/auction/process-expired-auctions', {
-    method: 'POST'
-  }).then(res => res.json())
-    .then(json => console.log('[마감처리]', json))
-    .catch(err => console.error('❌ 마감 처리 실패:', err));
+
+    fetch(
+        'http://localhost:3000/auction/process-expired-auctions',
+        {
+            method: 'POST'
+        }
+    )
+        .then(res => res.json())
+        .then(json => {
+            console.log('[마감처리]', json);
+        })
+        .catch(err => {
+            console.error('❌ 마감 처리 실패:', err);
+        });
+
 }, 6000);
