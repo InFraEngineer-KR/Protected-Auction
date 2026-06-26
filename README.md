@@ -15,13 +15,16 @@
 
 | 분류 | 기술 |
 |------|------|
-| Backend | Node.js, Express.js |
-| Database | PostgreSQL (Supabase) |
-| 실시간 통신 | Socket.io |
-| 템플릿 엔진 | EJS |
-| 인증 | Express-session |
-| 파일 업로드 | Multer |
-| 환경변수 | dotenv |
+| **Runtime** | Node.js |
+| **Framework** | Express.js |
+| **Database** | PostgreSQL (Supabase) |
+| **실시간 통신** | Socket.io |
+| **템플릿 엔진** | EJS |
+| **세션 관리** | express-session |
+| **파일 업로드** | Multer |
+| **날짜/시간 처리** | dayjs |
+| **환경변수** | dotenv |
+| **UI** | Bootstrap (SB Admin 2) |
 
 ---
 
@@ -29,20 +32,20 @@
 
 ```
 Protected-Auction/
-├── app.js                  # 서버 진입점, Socket.io 설정
-├── db.js                   # PostgreSQL 연결 설정
-├── .env                    # 환경변수 (DB 접속 정보)
+├── app.js                    # 서버 진입점, Socket.io 설정
+├── db.js                     # PostgreSQL 연결 설정
+├── .env                      # 환경변수 (DB 접속 정보)
 ├── routes/
-│   ├── login_route.js      # 로그인 / 회원가입
-│   ├── itemList_route.js   # 경매 목록 / 글쓰기
-│   ├── itemDetail_route.js # 경매 상세 / 입찰
-│   ├── chat_route.js       # 채팅방
-│   ├── mypage_route.js     # 마이페이지
-│   ├── myList_route.js     # 내 판매/입찰 내역
+│   ├── login_route.js        # 로그인 / 회원가입
+│   ├── itemList_route.js     # 경매 목록 / 글쓰기
+│   ├── itemDetail_route.js   # 경매 상세 / 입찰
+│   ├── chat_route.js         # 채팅방
+│   ├── mypage_route.js       # 마이페이지
+│   ├── myList_route.js       # 내 판매/입찰 내역
 │   └── auctionClose_route.js # 경매 마감 처리
-├── public/                 # 정적 파일 (HTML, CSS, JS, 이미지)
-├── views/                  # EJS 템플릿
-└── uploads/                # 업로드된 이미지
+├── public/                   # 정적 파일 (HTML, CSS, JS, 이미지)
+├── views/                    # EJS 템플릿
+└── uploads/                  # 업로드된 이미지
 ```
 
 ---
@@ -115,6 +118,6 @@ npm start
 
 ## 👨‍💻 개발 정보
 
-- 개발 기간: 2025년 3학년 1학기 웹서버프로그래밍 수업
+- 개발 기간: 2025년 3학년 1학기 웹서버프로그래밍
 - 개발 환경: Windows, VS Code
 - DB 호스팅: Supabase (PostgreSQL)
