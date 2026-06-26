@@ -1,65 +1,120 @@
-# [Start Bootstrap - SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/)
+# 🔨 Protected Auction
 
-[SB Admin 2](https://startbootstrap.com/theme/sb-admin-2/) is an open source admin dashboard theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/).
+> 실시간 경매 및 채팅 기능을 제공하는 웹 서비스
 
-For the legacy Bootstrap 3 version of this theme, you can view the [last stable release](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/releases/tag/v3.3.7%2B1) of SB Admin 2 for Bootstrap 3.
+---
 
-## Preview
+## 📌 프로젝트 소개
 
-[![SB Admin 2 Preview](https://assets.startbootstrap.com/img/screenshots/themes/sb-admin-2.png)](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)
+**Protected Auction**은 사용자가 물품을 등록하고 실시간으로 입찰할 수 있는 경매 플랫폼입니다.  
+경매 마감 후 낙찰자와 판매자 간의 채팅방이 자동으로 생성되어 거래를 이어갈 수 있습니다.
 
-**[Launch Live Preview](https://startbootstrap.github.io/startbootstrap-sb-admin-2/)**
+---
 
-## Status
+## 🛠 기술 스택
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/StartBootstrap/startbootstrap-sb-admin-2/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/startbootstrap-sb-admin-2.svg)](https://www.npmjs.com/package/startbootstrap-sb-admin-2)
-[![Build Status](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2.svg?branch=master)](https://travis-ci.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![dependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2)
-[![devDependencies Status](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2/dev-status.svg)](https://david-dm.org/StartBootstrap/startbootstrap-sb-admin-2?type=dev)
+| 분류 | 기술 |
+|------|------|
+| Backend | Node.js, Express.js |
+| Database | PostgreSQL (Supabase) |
+| 실시간 통신 | Socket.io |
+| 템플릿 엔진 | EJS |
+| 인증 | Express-session |
+| 파일 업로드 | Multer |
+| 환경변수 | dotenv |
 
-## Download and Installation
+---
 
-To begin using this template, choose one of the following options to get started:
+## 📁 프로젝트 구조
 
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/)
-* Install via npm: `npm i startbootstrap-sb-admin-2`
-* Clone the repo: `git clone https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/StartBootstrap/startbootstrap-sb-admin-2)
+```
+Protected-Auction/
+├── app.js                  # 서버 진입점, Socket.io 설정
+├── db.js                   # PostgreSQL 연결 설정
+├── .env                    # 환경변수 (DB 접속 정보)
+├── routes/
+│   ├── login_route.js      # 로그인 / 회원가입
+│   ├── itemList_route.js   # 경매 목록 / 글쓰기
+│   ├── itemDetail_route.js # 경매 상세 / 입찰
+│   ├── chat_route.js       # 채팅방
+│   ├── mypage_route.js     # 마이페이지
+│   ├── myList_route.js     # 내 판매/입찰 내역
+│   └── auctionClose_route.js # 경매 마감 처리
+├── public/                 # 정적 파일 (HTML, CSS, JS, 이미지)
+├── views/                  # EJS 템플릿
+└── uploads/                # 업로드된 이미지
+```
 
-## Usage
+---
 
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+## 🗄 데이터베이스 구조
 
-### Gulp Tasks
+```
+users          - 회원 정보
+auction        - 경매 글
+bid            - 입찰 내역
+chatting       - 채팅방 (경매당 1개)
+chattingRoom   - 채팅 메시지
+```
 
-* `gulp` the default task that builds everything
-* `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-* `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-* `gulp js` minifies the themes JS file
-* `gulp vendor` copies dependencies from node_modules to the vendor directory
+---
 
-You must have npm installed globally in order to use this build environment. This theme was built using node v11.6.0 and the Gulp CLI v2.0.1. If Gulp is not running properly after running `npm install`, you may need to update node and/or the Gulp CLI locally.
+## ⚙️ 설치 및 실행
 
-## Bugs and Issues
+### 1. 패키지 설치
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](https://startbootstrap.com/theme/sb-admin-2/).
+```bash
+npm install
+```
 
-## About
+### 2. 환경변수 설정
 
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
+`.env` 파일을 루트에 생성합니다.
 
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
+```env
+DB_USER=your_db_user
+DB_HOST=your_db_host
+DB_NAME=postgres
+DB_PASSWORD=your_db_password
+DB_PORT=5432
+```
 
-Start Bootstrap was created by and is maintained by **[David Miller](https://davidmiller.io/)**.
+### 3. 서버 실행
 
-* <https://davidmiller.io>
-* <https://twitter.com/davidmillerhere>
-* <https://github.com/davidtmiller>
+```bash
+npm start
+```
 
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+서버가 실행되면 [http://localhost:3000](http://localhost:3000) 에서 확인할 수 있습니다.
 
-## Copyright and License
+---
 
-Copyright 2013-2021 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-resume/blob/master/LICENSE) license.
+## 🔑 주요 기능
+
+### 👤 회원 기능
+- 회원가입 / 로그인 / 로그아웃
+- 아이디 · 닉네임 중복 확인
+- 마이페이지 (프로필 이미지, 닉네임, 전화번호 수정)
+
+### 🏷 경매 기능
+- 경매 글 등록 (이미지 업로드 포함)
+- 경매 목록 조회 (진행중 / 마감 상태 표시)
+- 실시간 입찰 (동시 입찰 방지 처리)
+- 경매 자동 마감 (6초마다 체크)
+
+### 💬 채팅 기능
+- 경매 마감 시 낙찰자 ↔ 판매자 채팅방 자동 생성
+- Socket.io 기반 실시간 채팅
+- 입력 중 표시 기능
+
+### 📋 내역 기능
+- 내 판매 내역 조회
+- 내 입찰 내역 조회
+
+---
+
+## 👨‍💻 개발 정보
+
+- 개발 기간: 2025년 3학년 1학기 웹서버프로그래밍 수업
+- 개발 환경: Windows, VS Code
+- DB 호스팅: Supabase (PostgreSQL)
